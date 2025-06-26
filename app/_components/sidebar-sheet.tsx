@@ -2,8 +2,7 @@ import { Button } from './ui/button'
 import { CalendarIcon, HomeIcon, LogOutIcon } from 'lucide-react'
 import { SheetClose, SheetContent, SheetHeader, SheetTitle } from './ui/sheet'
 import { quickSearchOption } from '../_constants/search'
-import { Avatar } from '@radix-ui/react-avatar'
-import { AvatarImage } from './ui/avatar'
+import { Avatar, AvatarImage } from './ui/avatar'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -14,7 +13,7 @@ const SidebarSheet = () => {
         <SheetTitle className="text-left">Menu</SheetTitle>
       </SheetHeader>
 
-      <div className="flex items-center gap-3 border-b border-solid p-5">
+      <div className="flex items-center gap-3 border-b border-solid p-5 pl-1">
         <Avatar>
           <AvatarImage src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
         </Avatar>

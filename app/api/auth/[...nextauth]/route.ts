@@ -14,6 +14,21 @@ const handler = NextAuth({
   pages: {
     signIn: '/auth/signin',
   },
+  callbacks: {
+    async session({ session, user }) {
+      session.user = {
+        ...session.user,
+        id: user.id,
+      } as {
+        id: string
+        name?: string | null
+        email?: string | null
+        image?: string | null
+      }
+
+      return session
+    },
+  },
 })
 
 export { handler as GET, handler as POST }

@@ -136,8 +136,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       console.log(hour, minute, data)
 
       await createBooking({
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        userId: (data?.user as any).id,
         barbershopServiceId: service.id,
         date: newDate,
       })

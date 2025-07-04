@@ -14,13 +14,14 @@ import {
 import { Calendar } from './ui/calendar'
 import { ptBR } from 'date-fns/locale'
 import { useEffect, useMemo, useState } from 'react'
-import { format, isPast, isToday, set } from 'date-fns'
+import { isPast, isToday, set } from 'date-fns'
 import { createBooking } from '../_actions/create-booking'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { getBooking } from '../_actions/get-booking'
 import { Dialog, DialogContent } from './ui/dialog'
 import SignInDialog from './sign-in-dialog'
+import BookingSummary from './booking-summary'
 
 interface ServiceItemProps {
   service: BarbershopService
@@ -117,6 +118,15 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     setBookingSheetIsOpen((prev) => !prev)
   }
 
+  const selectedDate = useMemo(() => {
+    if (!selectedDay || !selectedTime) return
+
+    return set(selectedDay, {
+      hours: Number(selectedTime?.split(':')[0]),
+      minutes: Number(selectedTime?.split(':')[1]),
+    })
+  }, [selectedDay, selectedTime])
+
   const handleBookingClick = () => {
     if (data?.user) {
       return setBookingSheetIsOpen(true)
@@ -136,22 +146,12 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   const handleCreateBooking = async () => {
     //1. Não exibir os horários que já foram agendados
     //2. Salvar o agendamento para o usuário logado
-    if (!selectedDay || !selectedTime) {
-      return
-    }
-
     try {
-      const hour = Number(selectedTime?.split(':')[0])
-      const minute = Number(selectedTime?.split(':')[1])
-      const newDate = set(selectedDay, {
-        hours: hour,
-        minutes: minute,
-      })
-      console.log(hour, minute, data)
+      if (!selectedDate) return
 
       await createBooking({
         barbershopServiceId: service.id,
-        date: newDate,
+        date: selectedDate,
       })
 
       handleBookingSheetOpenChange()
@@ -262,42 +262,13 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                     </div>
                   )}
 
-                  {selectedDay && selectedTime && (
+                  {selectedDate && (
                     <div className="p-5">
-                      <Card>
-                        <CardContent className="space-y-3 p-3">
-                          <div className="flex items-center justify-between">
-                            <h2 className="font-bold">{service.name}</h2>
-
-                            <p className="text-sm font-bold">
-                              {Intl.NumberFormat('pt-BR', {
-                                style: 'currency',
-                                currency: 'BRL',
-                              }).format(Number(service.price))}
-                            </p>
-                          </div>
-
-                          <div className="flex items-center justify-between">
-                            <h2 className="text-sm text-gray-400">Data</h2>
-
-                            <p className="text-sm">
-                              {format(selectedDay, "d 'de' MMMM", {
-                                locale: ptBR,
-                              })}
-                            </p>
-                          </div>
-
-                          <div className="flex items-center justify-between">
-                            <h2 className="text-sm text-gray-400">Hora</h2>
-                            <p className="text-sm">{selectedTime}</p>
-                          </div>
-
-                          <div className="flex items-center justify-between">
-                            <h2 className="text-sm text-gray-400">Barbearia</h2>
-                            <p className="text-sm">{barbershop.name}</p>
-                          </div>
-                        </CardContent>
-                      </Card>
+                      <BookingSummary
+                        service={service}
+                        barbershop={barbershop}
+                        selectedDate={selectedDate}
+                      />
                     </div>
                   )}
 
@@ -305,7 +276,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                     <Button
                       type="submit"
                       onClick={() => handleCreateBooking()}
-                      disabled={!selectedDay || !selectedTime}
+                      disabled={!selectedDate}
                     >
                       Confirmar
                     </Button>

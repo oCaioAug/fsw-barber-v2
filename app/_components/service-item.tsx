@@ -262,7 +262,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                     </div>
                   )}
 
-                  {selectedTime && selectedTime && (
+                  {selectedDay && selectedTime && (
                     <div className="p-5">
                       <Card>
                         <CardContent className="space-y-3 p-3">

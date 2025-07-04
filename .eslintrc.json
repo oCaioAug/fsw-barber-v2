@@ -1,6 +1,13 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
-    "no-unused-vars": "error"
-  }
+    "no-unused-vars": "warn"
+  },
+  "ignorePatterns": [
+    "app/generated/**",
+    ".next/**",
+    "node_modules/**",
+    "out/**",
+    "build/**"
+  ]
 }

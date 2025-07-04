@@ -63,7 +63,7 @@ const Bookings = async () => {
           </>
         )}
 
-        {concludedBookings.length && (
+        {concludedBookings.length > 0 && (
           <>
             <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
               Finalizados
@@ -72,6 +72,10 @@ const Bookings = async () => {
               <BookingItem key={booking.id} booking={booking} />
             ))}
           </>
+        )}
+
+        {confirmedBookings.length === 0 && concludedBookings.length === 0 && (
+          <p className="text-gray-400">Nenhum agendamento encontrado.</p>
         )}
       </div>
     </>

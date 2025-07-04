@@ -180,15 +180,10 @@ O projeto é compatível com qualquer plataforma que suporte Node.js:
 4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
 ## 📞 Contato
 
-- **Desenvolvedor**: [Seu Nome](https://github.com/seu-usuario)
-- **Email**: seu.email@exemplo.com
-- **LinkedIn**: [Seu LinkedIn](https://linkedin.com/in/seu-perfil)
+- **Desenvolvedor**: [oCaioAug](https://github.com/oCaioAug)
+- **LinkedIn**: [Seu LinkedIn](https://www.linkedin.com/in/caio-augusto-331818229/)
 
 ---
 
